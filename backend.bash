@@ -11,24 +11,24 @@ echo "tzdata tzdata/Zones/America select Santo_Domingo" |  debconf-set-selection
 DEBIAN_FRONTEND=noninteractive apt install tzdata -y
 
 apt install php-cli -y
+apt install php-pgsql -y
 apt install php8.3-fpm -y
 apt install unzip -y
-apt install curl -y
+sudo apt install postgresql -y
 apt install nginx -y
 
 
 
 # Download moodle
-
 curl -L -o moodle.zip https://github.com/moodle/moodle/archive/refs/tags/v4.5.4.zip
 unzip moodle.zip 
 
-
+# Rename the extracted folder
 mv moodle-4.5.4 moodle
 
 # Move moodle to the web server root directory
-
 mv moodle /var/www/html/moodle
+
 # Set permissions
 chown -R www-data:www-data /var/www/html/moodle
 chmod -R 755 /var/www/html/moodle
