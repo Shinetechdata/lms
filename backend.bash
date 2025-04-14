@@ -17,8 +17,6 @@ apt install unzip -y
 sudo apt install postgresql -y
 apt install nginx -y
 
-
-
 # Download moodle
 curl -L -o moodle.zip https://github.com/moodle/moodle/archive/refs/tags/v4.5.4.zip
 unzip moodle.zip 
