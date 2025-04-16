@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  test_moodle:
+    image: ubuntu
+    container_name: test_moodle
+    networks:
+      - moodle
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    volumes:
+      - test_moodle_data:/data
+
+  moodle_postgres:
+    image: bitnami/postgresql:latest
+    container_name: moodle-postgres
+    networks:
+      - moodle
+    ports:
+      - "4000:4000"
+    environment:
+      - POSTGRESQL_USERNAME=moodle
+      - POSTGRESQL_PASSWORD=moodle
+      - POSTGRESQL_DATABASE=moodle
+      - POSTGRESQL_PORT_NUMBER=4000
+      - POSTGRESQL_POSTGRES_PASSWORD=1234
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+networks:
+  moodle:
+    driver: bridge
+
+volumes:
+  test_moodle_data:
+  postgres_data:
