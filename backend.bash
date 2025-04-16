@@ -1,5 +1,6 @@
+!#/bin/bash
 
-
+# Go to the home directory
 cd /home/$USER
 
 echo "Updateing system and installing dependencies..."
@@ -10,14 +11,27 @@ echo "tzdata tzdata/Areas select America" |  debconf-set-selections
 echo "tzdata tzdata/Zones/America select Santo_Domingo" |  debconf-set-selections
 DEBIAN_FRONTEND=noninteractive apt install tzdata -y
 
-apt install php-cli -y
-apt install php-pgsql -y
-apt install php8.3-fpm -y
-apt install unzip -y
-sudo apt install postgresql -y
-apt install nginx -y
+apt install php-pgsql php-fpm php-common php-mysql php-gmp php-curl php-intl php-mbstring php-soap php-xmlrpc php-gd php-xml php-cli php-zip unzip nginx curl -y
 
-# Download moodle
+
+# Update PHP configuration
+cat <<EOL >> /etc/php/8.3/fpm/php.ini
+memory_limit = 256M
+cgi.fix_pathinfo = 0
+upload_max_filesize = 100M
+max_execution_time = 360
+date.timezone = America/Santo_Domingo
+max_input_vars = 5000
+EOL
+
+# restarts php-fpm
+service php8.3-fpm restart
+# Configure PostgreSQL to allow external connections
+cat <<EOL > /etc/postgresql/*/main/postgresql.conf
+listen_addresses = '*'
+EOL
+
+# Download moodlea
 curl -L -o moodle.zip https://github.com/moodle/moodle/archive/refs/tags/v4.5.4.zip
 unzip moodle.zip 
 
@@ -28,23 +42,17 @@ mv moodle-4.5.4 moodle
 mv moodle /var/www/html/moodle
 
 # Set permissions
+mkdir -p /var/www/html/moodledata
 chown -R www-data:www-data /var/www/html/moodle
-chmod -R 755 /var/www/html/moodle
-
-# Create moodledata directory
-mkdir /var/moodledata
-
-# Set permissions for moodledata
-chown -R www-data:www-data /var/moodledata
-chmod -R 755 /var/moodledata
+chmod -R 755 /var/www/html/*
+chown www-data:www-data /var/www/html/moodledata
 
 # Configure Nginx
 cat <<EOL > /etc/nginx/conf.d/moodle.conf
 server {
-    listen 80;
+    listen 3000;
     root /var/www/html/moodle;
     index index.php index.html index.htm;
-
 
     client_max_body_size 100M;
     autoindex off;
@@ -66,6 +74,8 @@ server {
 }
 EOL
 
-
+# Test Nginx configuration and restart
 nginx -t
-nginx restart
+nginx
+nginx -s stop
+nginx
