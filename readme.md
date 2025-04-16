@@ -1,47 +1,47 @@
-# How to Set Up and Run the Docker Compose Environment
+# Cómo Configurar y Ejecutar el Entorno de Docker Compose
 
-This guide will help you set up and run the services defined in the `compose.yml` file.
+Esta guía te ayudará a configurar y ejecutar los servicios definidos en el archivo `compose.yml`.
 
-## Prerequisites
+## Requisitos Previos
 
-1. **Docker**: Ensure Docker is installed on your system. You can download it from [Docker's official website](https://www.docker.com/).
-2. **Docker Compose**: Docker Compose is included with Docker Desktop. Verify its installation by running:
-   ```bash
-   docker-compose --version
-   ```
+1. **Docker**: Asegúrate de que Docker esté instalado en tu sistema. Puedes descargarlo desde [el sitio oficial de Docker](https://www.docker.com/).
+2. **Docker Compose**: Docker Compose está incluido con Docker Desktop. Verifica su instalación ejecutando:
+    ```bash
+    docker-compose --version
+    ```
 
-## Steps to Set Up and Run
+## Pasos para Configurar y Ejecutar
 
-1. **Navigate to the Project Directory**
-   Open a terminal and navigate to the directory containing the `compose.yml` file:
-   ```bash
-   cd /Users/diogenesmonegro/Documents/udd/lms
-   ```
+1. **Navega al Directorio del Proyecto**
+    Abre una terminal y navega al directorio que contiene el archivo `compose.yml`:
+    ```bash
+    cd /Users/diogenesmonegro/Documents/udd/lms
+    ```
 
-2. **Start the Services**
-   Run the following command to start the services defined in the `compose.yml` file:
-   ```bash
-   docker-compose up
-   ```
-   This will:
-   - Start the `test_moodle` service, which runs a bash script (`backend.bash`) in an Ubuntu container.
-   - Start the `moodle_postgres` service, which runs a PostgreSQL database using the Bitnami image.
+2. **Inicia los Servicios**
+    Ejecuta el siguiente comando para iniciar los servicios definidos en el archivo `compose.yml`:
+    ```bash
+    docker-compose up
+    ```
+    Esto hará lo siguiente:
+    - Iniciará el servicio `test_moodle`, que ejecuta un script bash (`backend.bash`) en un contenedor de Ubuntu.
+    - Iniciará el servicio `moodle_postgres`, que ejecuta una base de datos PostgreSQL utilizando la imagen de Bitnami.
 
-3. **Access the Services**
-   - The `test_moodle` service is exposed on port `3000`.
-   - The `moodle_postgres` service is exposed on port `4000`.
+3. **Accede a los Servicios**
+    - El servicio `test_moodle` está expuesto en el puerto `3000`.
+    - El servicio `moodle_postgres` está expuesto en el puerto `4000`.
 
-4. **Stop the Services**
-   To stop the services, press `Ctrl+C` in the terminal where the services are running. Then, run:
-   ```bash
-   docker-compose down
-   ```
-   This will stop and remove the containers, networks, and volumes created by `docker-compose up`.
+4. **Detén los Servicios**
+    Para detener los servicios, presiona `Ctrl+C` en la terminal donde se están ejecutando los servicios. Luego, ejecuta:
+    ```bash
+    docker-compose down
+    ```
+    Esto detendrá y eliminará los contenedores, redes y volúmenes creados por `docker-compose up`.
 
-## Notes
+## Notas
 
-- The `test_moodle` service uses a volume (`test_moodle_data`) to persist data in the `/data` directory.
-- The `moodle_postgres` service uses a volume (`postgres_data`) to persist PostgreSQL data in `/var/lib/postgresql/data`.
-- Ensure the `backend.bash` script exists in the `/data` directory for the `test_moodle` service to run correctly.
+- El servicio `test_moodle` utiliza un volumen (`test_moodle_data`) para persistir datos en el directorio `/data`.
+- El servicio `moodle_postgres` utiliza un volumen (`postgres_data`) para persistir datos de PostgreSQL en `/var/lib/postgresql/data`.
+- Asegúrate de que el script `backend.bash` exista en el directorio `/data` para que el servicio `test_moodle` funcione correctamente.
 
-For more information on Docker Compose, refer to the [official documentation](https://docs.docker.com/compose/).
+Para más información sobre Docker Compose, consulta la [documentación oficial](https://docs.docker.com/compose/).
