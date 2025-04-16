@@ -13,7 +13,6 @@ DEBIAN_FRONTEND=noninteractive apt install tzdata -y
 
 apt install php-pgsql php-fpm php-common php-mysql php-gmp php-curl php-intl php-mbstring php-soap php-xmlrpc php-gd php-xml php-cli php-zip unzip nginx curl -y
 
-
 # Update PHP configuration
 cat <<EOL >> /etc/php/8.3/fpm/php.ini
 memory_limit = 256M
