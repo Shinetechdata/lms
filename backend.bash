@@ -46,9 +46,6 @@ chown -R www-data:www-data /var/www/html/moodle
 chmod -R 755 /var/www/html/*
 chown www-data:www-data /var/www/html/moodledata
 
-# Ensure the script is executable
-chmod +x /data/backend.bash
-
 # Configure Nginx
 cat <<EOL > /etc/nginx/conf.d/moodle.conf
 server {
