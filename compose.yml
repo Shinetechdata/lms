@@ -12,8 +12,7 @@ services:
     tty: true
     volumes:
       - test_moodle_data:/data
-    command: ["/bin/bash", "-c", "while true; do sleep 30; done;"]
-    entrypoint: ["/bin/bash", "/data/backend.bash"]
+    entrypoint: ["/bin/bash", "-c", "/bin/bash backend.bash; exec /bin/bash"]
 
   moodle_postgres:
     image: bitnami/postgresql:latest
