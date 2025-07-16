@@ -43,5 +43,6 @@ Esta guía te ayudará a configurar y ejecutar los servicios definidos en el arc
 - El servicio `test_moodle` utiliza un volumen (`test_moodle_data`) para persistir datos en el directorio `/data`.
 - El servicio `moodle_postgres` utiliza un volumen (`postgres_data`) para persistir datos de PostgreSQL en `/var/lib/postgresql/data`.
 - Asegúrate de que el script `backend.bash` exista en el directorio `/data` para que el servicio `test_moodle` funcione correctamente.
+- Para ingresar a la terminal del contenedor usar `docker exec -it test_moodle /bin/bash`
 
 Para más información sobre Docker Compose, consulta la [documentación oficial](https://docs.docker.com/compose/).
